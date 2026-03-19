@@ -59,12 +59,6 @@ h3,
   gap: 12px;
 }
 
-.brand img {
-  width: 52px;
-  height: 52px;
-  border-radius: 13px;
-}
-
 .brand strong {
   display: block;
   font-size: 1.08rem;
