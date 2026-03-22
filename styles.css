@@ -233,6 +233,7 @@ h3,
   display: flex;
   gap: 9px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .actions.actions-top {
@@ -264,15 +265,6 @@ h3,
   color: var(--text);
 }
 
-.btn.privacy-btn {
-  background: linear-gradient(135deg, #0f9d8a, #33bfa8);
-  color: #ffffff;
-}
-
-.btn.privacy-btn:hover {
-  background: linear-gradient(135deg, #0d7f70, #2ba892);
-}
-
 .appstore-badge {
   display: inline-flex;
   line-height: 0;
@@ -282,6 +274,24 @@ h3,
   height: 46px;
   width: auto;
   display: block;
+}
+
+.btn.store-link {
+  height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2f7fb0, #206795);
+  color: #ffffff;
+  border: 1px solid #4f9fcd;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.btn.store-link:hover {
+  background: linear-gradient(135deg, #3f90c2, #2b76a7);
 }
 
 .appstore-link.pending {
