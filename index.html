@@ -72,6 +72,9 @@
               <p>
                 SaurusWar je rychlá dinosauří karetní hra pro iPhone a iPad. Oproti klasické Válce nerozhoduje jen vyšší karta, takže 		partie není předem ztracená hned od začátku. Výsledkem je svižná a jednoduše pochopitelná hra s větším napětím.
               </p>
+              <button class="app-screen-trigger" type="button" data-fullsrc="assets/sauruswar-screen.png" data-alt="SaurusWar screenshot">
+                <img class="app-screen" src="assets/sauruswar-screen.png" alt="SaurusWar screenshot">
+              </button>
               <div class="actions">
                 <a class="appstore-badge appstore-link" href="https://apps.apple.com/app/sauruswar/id6760842973" target="_blank" rel="noopener noreferrer" aria-label="Stáhnout SaurusWar v App Store">
                   <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/cs-cz?size=250x83" alt="Download on the App Store">
@@ -98,6 +101,9 @@
               <p>
                 SpoolGuard je macOS aplikace pro přehlednou správu filamentů a tisků. Umožní ti evidovat cívky, sledovat spotřebu 		materiálu a mít pod kontrolou zásoby i náklady bez zbytečně složitého systému.
               </p>
+              <button class="app-screen-trigger" type="button" data-fullsrc="assets/spoolguard-screen.png" data-alt="SpoolGuard screenshot">
+                <img class="app-screen" src="assets/spoolguard-screen.png" alt="SpoolGuard screenshot">
+              </button>
               <div class="actions">
                 <a class="appstore-badge appstore-link" href="https://apps.apple.com/app/spoolguard/id6760845673" target="_blank" rel="noopener noreferrer" aria-label="Stáhnout SpoolGuard v App Store">
                   <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/cs-cz?size=250x83" alt="Download on the App Store">
@@ -135,5 +141,44 @@
       iOS a macOS aplikace • © 2026 Mast Dev Studio
     </footer>
   </main>
+
+  <div id="screen-lightbox" class="lightbox" aria-hidden="true">
+    <button id="lightbox-close" class="lightbox-close" type="button" aria-label="Zavřít náhled">×</button>
+    <img id="lightbox-image" class="lightbox-image" src="" alt="">
+  </div>
+
+  <script>
+    (function () {
+      const lightbox = document.getElementById("screen-lightbox");
+      const lightboxImage = document.getElementById("lightbox-image");
+      const closeButton = document.getElementById("lightbox-close");
+      const triggers = document.querySelectorAll(".app-screen-trigger");
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImage.src = "";
+      }
+
+      triggers.forEach((trigger) => {
+        trigger.addEventListener("click", () => {
+          lightboxImage.src = trigger.dataset.fullsrc;
+          lightboxImage.alt = trigger.dataset.alt || "Náhled aplikace";
+          lightbox.classList.add("is-open");
+          lightbox.setAttribute("aria-hidden", "false");
+        });
+      });
+
+      closeButton.addEventListener("click", closeLightbox);
+      lightbox.addEventListener("click", (event) => {
+        if (event.target === lightbox) closeLightbox();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
