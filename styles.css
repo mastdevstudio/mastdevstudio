@@ -229,14 +229,24 @@ h3,
   text-justify: inter-word;
 }
 
+.app-screens {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #ffffff;
+}
+
 .app-screen {
-  width: min(220px, 100%);
+  width: 100%;
   max-height: 240px;
   object-fit: contain;
-  background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  margin: 0 0 14px;
+  background: #f7fbff;
+  border-radius: 10px;
+  border: 0;
   display: block;
 }
 
@@ -287,6 +297,39 @@ h3,
   font-size: 1.35rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 999px;
+  background: rgba(13, 20, 28, 0.86);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 1001;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.lightbox-nav svg {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+
+.lightbox-prev {
+  left: 24px;
+}
+
+.lightbox-next {
+  right: 24px;
 }
 
 .actions {
@@ -470,5 +513,19 @@ footer {
 
   .appstore-badge img {
     height: 42px;
+  }
+
+  .app-screens {
+    grid-template-columns: 1fr;
+  }
+
+  .lightbox-nav {
+    width: 54px;
+    height: 54px;
+  }
+
+  .lightbox-nav svg {
+    width: 28px;
+    height: 28px;
   }
 }

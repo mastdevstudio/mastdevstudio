@@ -72,9 +72,14 @@
               <p>
                 SaurusWar je rychlá dinosauří karetní hra pro iPhone a iPad. Oproti klasické Válce nerozhoduje jen vyšší karta, takže 		partie není předem ztracená hned od začátku. Výsledkem je svižná a jednoduše pochopitelná hra s větším napětím.
               </p>
-              <button class="app-screen-trigger" type="button" data-fullsrc="assets/sauruswar-screen.png" data-alt="SaurusWar screenshot">
-                <img class="app-screen" src="assets/sauruswar-screen.png" alt="SaurusWar screenshot">
-              </button>
+              <div class="app-screens">
+                <button class="app-screen-trigger" type="button" data-gallery="sauruswar" data-fullsrc="assets/sauruswar-screen.png" data-alt="SaurusWar screenshot">
+                  <img class="app-screen" src="assets/sauruswar-screen.png" alt="SaurusWar screenshot">
+                </button>
+                <button class="app-screen-trigger" type="button" data-gallery="sauruswar" data-fullsrc="assets/sauruswar-screen-2.png" data-alt="SaurusWar screenshot 2">
+                  <img class="app-screen" src="assets/sauruswar-screen-2.png" alt="SaurusWar screenshot 2">
+                </button>
+              </div>
               <div class="actions">
                 <a class="appstore-badge appstore-link" href="https://apps.apple.com/app/sauruswar/id6760842973" target="_blank" rel="noopener noreferrer" aria-label="Stáhnout SaurusWar v App Store">
                   <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/cs-cz?size=250x83" alt="Download on the App Store">
@@ -101,9 +106,14 @@
               <p>
                 SpoolGuard je macOS aplikace pro přehlednou správu filamentů a tisků. Umožní ti evidovat cívky, sledovat spotřebu 		materiálu a mít pod kontrolou zásoby i náklady bez zbytečně složitého systému.
               </p>
-              <button class="app-screen-trigger" type="button" data-fullsrc="assets/spoolguard-screen.png" data-alt="SpoolGuard screenshot">
-                <img class="app-screen" src="assets/spoolguard-screen.png" alt="SpoolGuard screenshot">
-              </button>
+              <div class="app-screens">
+                <button class="app-screen-trigger" type="button" data-gallery="spoolguard" data-fullsrc="assets/spoolguard-screen.png" data-alt="SpoolGuard screenshot">
+                  <img class="app-screen" src="assets/spoolguard-screen.png" alt="SpoolGuard screenshot">
+                </button>
+                <button class="app-screen-trigger" type="button" data-gallery="spoolguard" data-fullsrc="assets/spoolguard-screen-2.png" data-alt="SpoolGuard screenshot 2">
+                  <img class="app-screen" src="assets/spoolguard-screen-2.png" alt="SpoolGuard screenshot 2">
+                </button>
+              </div>
               <div class="actions">
                 <a class="appstore-badge appstore-link" href="https://apps.apple.com/app/spoolguard/id6760845673" target="_blank" rel="noopener noreferrer" aria-label="Stáhnout SpoolGuard v App Store">
                   <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/cs-cz?size=250x83" alt="Download on the App Store">
@@ -143,6 +153,12 @@
   </main>
 
   <div id="screen-lightbox" class="lightbox" aria-hidden="true">
+    <button id="lightbox-prev" class="lightbox-nav lightbox-prev" type="button" aria-label="Předchozí obrázek">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button id="lightbox-next" class="lightbox-nav lightbox-next" type="button" aria-label="Další obrázek">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5.5L16 12l-6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <button id="lightbox-close" class="lightbox-close" type="button" aria-label="Zavřít náhled">×</button>
     <img id="lightbox-image" class="lightbox-image" src="" alt="">
   </div>
@@ -152,7 +168,28 @@
       const lightbox = document.getElementById("screen-lightbox");
       const lightboxImage = document.getElementById("lightbox-image");
       const closeButton = document.getElementById("lightbox-close");
+      const prevButton = document.getElementById("lightbox-prev");
+      const nextButton = document.getElementById("lightbox-next");
       const triggers = document.querySelectorAll(".app-screen-trigger");
+      const galleries = {};
+      let activeGallery = "";
+      let activeIndex = 0;
+
+      triggers.forEach((trigger) => {
+        const key = trigger.dataset.gallery || "default";
+        if (!galleries[key]) galleries[key] = [];
+        galleries[key].push(trigger);
+      });
+
+      function showImage(galleryKey, index) {
+        const gallery = galleries[galleryKey] || [];
+        if (!gallery.length) return;
+        activeGallery = galleryKey;
+        activeIndex = (index + gallery.length) % gallery.length;
+        const current = gallery[activeIndex];
+        lightboxImage.src = current.dataset.fullsrc;
+        lightboxImage.alt = current.dataset.alt || "Náhled aplikace";
+      }
 
       function closeLightbox() {
         lightbox.classList.remove("is-open");
@@ -160,22 +197,39 @@
         lightboxImage.src = "";
       }
 
+      function showPrev() {
+        showImage(activeGallery, activeIndex - 1);
+      }
+
+      function showNext() {
+        showImage(activeGallery, activeIndex + 1);
+      }
+
       triggers.forEach((trigger) => {
         trigger.addEventListener("click", () => {
-          lightboxImage.src = trigger.dataset.fullsrc;
-          lightboxImage.alt = trigger.dataset.alt || "Náhled aplikace";
+          const key = trigger.dataset.gallery || "default";
+          const index = (galleries[key] || []).indexOf(trigger);
+          showImage(key, index);
           lightbox.classList.add("is-open");
           lightbox.setAttribute("aria-hidden", "false");
         });
       });
 
       closeButton.addEventListener("click", closeLightbox);
+      prevButton.addEventListener("click", showPrev);
+      nextButton.addEventListener("click", showNext);
       lightbox.addEventListener("click", (event) => {
         if (event.target === lightbox) closeLightbox();
       });
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
           closeLightbox();
+        }
+        if (event.key === "ArrowLeft" && lightbox.classList.contains("is-open")) {
+          showPrev();
+        }
+        if (event.key === "ArrowRight" && lightbox.classList.contains("is-open")) {
+          showNext();
         }
       });
     })();
